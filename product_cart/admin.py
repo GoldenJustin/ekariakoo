@@ -12,8 +12,11 @@ class CartProductAdmin(admin.ModelAdmin):
     list_display = ('product', 'quantity')
     readonly_fields = ('product', 'quantity', 'cart', 'status', 'user', 'variation')
     list_per_page = 5
+<<<<<<< HEAD
 
 
 # admin.site.register(Cart, CartAdmin)
 # admin.site.register(CartProduct, CartProductAdmin)
 
+=======
+>>>>>>> origin/main
