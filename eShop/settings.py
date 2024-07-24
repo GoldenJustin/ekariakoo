@@ -1,5 +1,12 @@
+import os
 from pathlib import Path
 from decouple import config
+import dj_database_url
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,7 +58,7 @@ SESSION_EXPIRE_SECONDS = 300  # 5 mins
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 SESSION_TIMEOUT_REDIRECT = '/'
 
-ROOT_URLCONF = 'mwampambashop.urls'
+ROOT_URLCONF = 'eShop.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mwampambashop.wsgi.application'
+WSGI_APPLICATION = 'eShop.wsgi.application'
 
 AUTH_USER_MODEL = 'users.Account'
 LOGIN_URL = 'two_factor:login'
@@ -85,6 +92,20 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+ENVIRONMENT = os.getenv('DJANGO_ENV', 'development')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+POSTGRES_LOCALLY = True
+
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
+    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
 
 # Password validation
@@ -121,7 +142,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR /'static'
 STATICFILES_DIRS = [
-    'mwampambashop/static',
+    'eShop/static',
 ]
 
 # Media files
@@ -145,25 +166,23 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
+# JAZZMIN_SETTINGS = {
+#     "site_title": "e-Kariakoo shop",
+#     "site_header": "e-Kariakoo shop",
+#     "site_brand": "e-Kariakoo shop", 
+#     "login_logo": "images/logo.png",
+#     "welcome_sign": "Sign in to start your session",
+#     "copyright": "e-Kariakoo shop",
+# }
 
 
-JAZZMIN_SETTINGS = {
-    "site_title": "e-Kariakoo shop",
-    "site_header": "e-Kariakoo shop",
-    "site_brand": "e-Kariakoo shop", 
-    "login_logo": "images/logo.png",
-    "welcome_sign": "Sign in to start your session",
-    "copyright": "e-Kariakoo shop",
-}
-
-
-JAZZMIN_UI_TWEAKS = {
-    "button_classes": {
-        "primary": "btn-outline-primary",
-        "secondary": "btn-outline-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success"
-    }
-}
+# JAZZMIN_UI_TWEAKS = {
+#     "button_classes": {
+#         "primary": "btn-outline-primary",
+#         "secondary": "btn-outline-secondary",
+#         "info": "btn-info",
+#         "warning": "btn-warning",
+#         "danger": "btn-danger",
+#         "success": "btn-success"
+#     }
+# }

@@ -1,7 +1,7 @@
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
 
-from mwampambashop.views import home
+from eShop.views import home
 from product_store.views import product_store, search_product, similar_product_suggestion
 from product_cart.views import cart, add_product_to_cart, remove_product_from_cart, delete_cart_item
 from product_order.views import place_order, make_payment, complete_order
