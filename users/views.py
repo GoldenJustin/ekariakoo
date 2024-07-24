@@ -32,7 +32,7 @@ class VendorFirstNameValidation(View):
             return JsonResponse({'first_name_error': 'First name should contains only alphanumeric characters'}, status=400)
 
         return JsonResponse({'first_name_valid': True})
-
+# Vendor
 class VendorLastNameValidation(View):
     def post(self, request):
         data = json.loads(request.body)
